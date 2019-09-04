@@ -5,6 +5,9 @@ author: Joey <majunjiev@gmail.com>
 tags: [Golang]
 ---
 
+本文将介绍我在写 oVirt Go SDK 时，struct 内属性定义为指针。
+
+<!--more-->
 
 ## 前言
 

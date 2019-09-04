@@ -5,9 +5,9 @@ author: Joey <majunjiev@gmail.com>
 tags: [Restful]
 ---
 
-## 写在前面
-
 本文是阅读[7 Rules for REST API URI Design](http://blog.restcase.com/7-rules-for-rest-api-uri-design/)后，结合自己的经验，就《如何设计优秀的 REST API URI》做的个人讨论。
+
+<!--more-->
 
 以下 “原文” 表示 《7 Rules for REST API URI Design》。
 

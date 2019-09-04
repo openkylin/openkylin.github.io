@@ -5,8 +5,10 @@ author: Joey <majunjiev@gmail.com>
 tags: [Virtualization]
 ---
 
-## 原文地址
-本文翻译自 oVirt 官网文章：[oVirt Arch](https://www.ovirt.org/documentation/architecture/architecture/) 。
+本文翻译自 oVirt 官网文章：[oVirt Arch](https://www.ovirt.org/documentation/architecture/architecture/)，介绍了 oVirt 的系统架构图。
+
+<!--more-->
+
 先上一张 oVirt 的模块/接口概览图。
 ![oVirt-illustration](https://www.ovirt.org/images/wiki/Ovirt-1024x698.png?1478101462) 
 
