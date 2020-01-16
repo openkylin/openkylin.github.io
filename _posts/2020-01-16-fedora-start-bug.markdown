@@ -4,7 +4,7 @@ title: Fedora30 物理断电后重启问题
 author: Sindweller-ch <jinghan.chen@cs2c.com.cn>
 tags: [Fedora]
 ---
-# Fedora30 物理断电后重启问题
+## Fedora30 物理断电后重启问题
 Fedora30 **物理重启** 后，停留在
 ```
 generating /run/initramfs/rdsosreport.txt
@@ -14,7 +14,7 @@ generating /run/initramfs/rdsosreport.txt
 Failed to start File System Check on /dev/mapper/fedora-root.
 ```
 另有提醒**fsck failed**，说明是文件系统的问题，且修复失败。
-## 解决办法
+### 解决办法
 ```
 fsck /dev/mapper/fedora-root
 ```
