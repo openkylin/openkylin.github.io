@@ -10,8 +10,8 @@ tags: [grpc]
 ![服务器推送](https://kinsta.com/wp-content/uploads/2016/04/http2-push.png)
 ![HTTP2授权](https://kinsta.com/wp-content/uploads/2016/04/http2-authorized.png)
 2. 引入了**多路复用**概念，通过单个TCP连接完成交错请求和响应，且没有队首阻塞。功能的实现基于“二进制分帧”的特性。
-3. 是一种**二进制协议**，二进制成帧层将消息划分为多个帧，这些帧根据其类型（数据或报头）进行分离。 此功能在安全性，压缩和多路复用方面大大提高了效率。
-![](https://cheapsslsecurity.com/p/wp-content/uploads/2019/07/binary-framing-layer-500x258.png)
+3. 是一种**二进制协议**，二进制成帧层将消息划分为多个帧，这些帧根据其类型（数据或报头）进行分离。 此功能在安全性，压缩和多路复用方面大大提高了效率。  
+![二进制协议](https://cheapsslsecurity.com/p/wp-content/uploads/2019/07/binary-framing-layer-500x258.png)   
 4. **安全性能**方面，HTTP2使用HPACK标头压缩算法，该算法可抵御像CRIME这样的攻击，并使用静态霍夫曼编码。
 ## HTTP2与HTTP1的区别
 1. 线端阻塞：HTTP1限制为每个TCP连接仅处理一个未完成的请求，如果有多个请求，则浏览器需要并行使用多个TCP连接，将导致拥塞，同时垄断网络资源，降低其他用户的网络性能。**HTTP2采用多路复用，所有的通信都在一个TCP连接上完成，实现了真正的并行传输。**
@@ -38,10 +38,10 @@ HTTP2是二进制协议，支持多路复用，报头压缩，资源优先级和
 - 服务器推送
 当浏览器请求一个网页时，服务器将会发回HTML，在服务器开始发送JavaScript、图片和CSS前，服务器需要等待浏览器解析HTML和发送所有内嵌资源的请求。服务器推送服务通过“推送”那些它认为客户端将会需要的内容到客户端的缓存中，以此来避免往返的延迟。
 ### ref
-[What's wrong with http1?](https://kinsta.com/learn/what-is-http2/#what_was_wrong_with_http1)
-[http/1.x,http/2,https,SSL,TLS](https://www.cnblogs.com/smallJunJun/p/10546975.html)
-[new TLS features](http://http2.github.io/http2-spec/#TLSUsage) Section 9.2
-[HTTP/1.x vs. HTTP/2 – The Difference Between the Two Protocols Explained](https://cheapsslsecurity.com/p/http2-vs-http1/)
-[The first answer](https://stackoverflow.com/questions/28592077/what-is-the-difference-between-http-1-1-and-http-2-0)
+[What's wrong with http1?](https://kinsta.com/learn/what-is-http2/#what_was_wrong_with_http1)  
+[http/1.x,http/2,https,SSL,TLS](https://www.cnblogs.com/smallJunJun/p/10546975.html)  
+[new TLS features](http://http2.github.io/http2-spec/#TLSUsage) Section 9.2  
+[HTTP/1.x vs. HTTP/2 – The Difference Between the Two Protocols Explained](https://cheapsslsecurity.com/p/http2-vs-http1/)  
+[The first answer](https://stackoverflow.com/questions/28592077/what-is-the-difference-between-http-1-1-and-http-2-0)  
 [HTTP/1.1 vs HTTP/2: What's the Difference?](https://www.digitalocean.com/community/tutorials/http-1-1-vs-http-2-what-s-the-difference)
 
