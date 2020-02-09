@@ -82,7 +82,7 @@ https://prometheus.io/docs/prometheus/latest/configuration/configuration/
 启动成功后就可以通过打开http://localhost:9090查看相关状态页了，可能需要30s的时间去收集信息。
 打开http://localhost:9090/metrics可以浏览metrics终端。
 
-###Ref
+### Ref
 
  1. [Prometheus Overview](https://prometheus.io/docs/introduction/overview/)
  2. [ibm.com developerworks](https://www.ibm.com/developerworks/cn/cloud/library/cl-lo-prometheus-getting-started-and-practice/index.html)
