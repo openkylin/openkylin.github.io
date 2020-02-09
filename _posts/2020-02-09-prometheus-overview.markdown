@@ -37,38 +37,34 @@ Prometheus是一套开源的系统监控警报工具包，初始建立在Soundcl
 ## 初始化配置 ##
 ### 下载
 从平台下载最新发布的Prometheus，然后解压缩
-
-    ``` 
-    tar xvfz prometheus-*.tar.gz
-    cd prometheus-* 
-    ```
+```
+tar xvfz prometheus-*.tar.gz
+    cd prometheus-*
+```
 Prometheus server是一个single binary文件（Windows中是prometheus.exe），可以使用--help flag去运行和查找帮助
-
-    ``` 
-    ./prometheus --help
+```
+   ./prometheus --help
     usage: prometheus [<flags>]
     The Prometheus monitoring server
     . . .
-    ```
+```
 在启动Prometheus之前需要先完成配置
 ### 配置
 Prometheus使用YAML配置，初始化下载中包含一个叫做prometheus.yml的配置文件，可以从这里开始。
+```
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
 
-    ```
-    global:
-      scrape_interval:     15s
-      evaluation_interval: 15s
-    
-    rule_files:
-      # - "first.rules"
-      # - "second.rules"
-    
-    scrape_configs:
-      - job_name: prometheus
-        static_configs:
-          - targets: ['localhost:9090']
-     ```
+rule_files:
+  # - "first.rules"
+  # - "second.rules"
 
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ['localhost:9090']
+```
 示例中代码主要分成3部分：global, rule_files, 和scrape_configd。
 
 *global* 用来管理Prometheus server的通用配置。有两种呈现，分别是记录scrape频率的*scrape_interval*，例子里是15s。第二个是评估Rules的频率，Prometheus使用rules创建新的时间序列或生成警报。
@@ -84,9 +80,9 @@ https://prometheus.io/docs/prometheus/latest/configuration/configuration/
 ###启动Prometheus
 启动修改过配置文件的通过更改config.file地址
 
-    ```
-    ./prometheus --config.file=prometheus.yml
-    ```
+```
+ ./prometheus --config.file=prometheus.yml
+```
 启动成功后就可以通过打开 http://localhost:9090 查看相关状态页了，可能需要30s的时间去收集信息。
 打开 http://localhost:9090/metrics 可以浏览metrics终端。
 
