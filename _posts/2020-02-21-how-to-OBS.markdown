@@ -1,0 +1,185 @@
+---
+layout: post
+title: OBS使用简介
+author: changjie.fu <changjie.fu@cs2c.com.cn>
+tags: [OBS]
+---
+
+## OBS是什么
+OBS是Open Build Service 的简写（官方网址：[https://openbuildservice.org/](https://openbuildservice.org/)）， 
+
+原本是作为发行版openSUSE专用的rpm打包的平台， 后续扩展为面向多发行版、多架构、多格式的打包发布平台。
+
+![OBS 系统结构。图自论文《集群模式操作系统软件包生成系统的研究与实现》](https://images.gitee.com/uploads/images/2020/0221/205813_a8818b8a_5682433.png "2020-02-21 16-52-25 的屏幕截图.png")
+
+## 与koji的不同
+- 管理范围
+
+    与koji只管理包（包括源码包与二进制包）仓库不同， OBS同时管理着源码与包两个仓库。
+    
+    koji是从一个包编译完成后开始接手，他根据包的NVR（Name-Version-Release）确定包的位置， 在编译验证后入库保存。而OBS是从源码阶段开始管理，他拥有自己的包版本标记与changelog日记。
+
+    OBS可以像git一样保存源码的历史版本，对源码进行分支管理。并生成各版本的二进制包与源码包。
+
+    换句话说， OBS可以同时实现koji和git的功能(但注意，OBS接受源码的格式与git普遍的保存格式并不相同，所以OBS无法完全取代git的作用)。
+- 适用格式
+    
+    OBS可以生成rpm、Debian、Arch等格式的包。而koji只适用于rpm格式。
+
+
+
+## OBS使用
+### 安装osc（OBS的命令行程序）：
+打开网址：[https://download.opensuse.org/repositories/openSUSE:/Tools/](https://download.opensuse.org/repositories/openSUSE:/Tools/)
+
+选择自己的系统版本，添加软件源到自身包管理器中。
+
+    例：  
+        fc30 将文件`http://download.opensuse.org/repositories/openSUSE:/Tools/Fedora_30/openSUSE:Tools.repo`另存到/etc/yum.repo.d/中（需要root权限）。
+
+安装osc
+
+`dnf install osc`
+
+### 注册OBS网页账号：
+打开网址：[https://build.opensuse.org/](https://build.opensuse.org/)
+
+点击右上角“Sign Up”，注册自己喜欢的帐号。
+
+注册完成后，重新回到上面网址。点击右上角的“Login”，用新账户登录。
+
+系统会在注册时自动创建一个以“home:用户名”为格式命名的Home Project。
+
+### 创建本地目录
+创建obs工作目录：
+`mkdir ~/obs`
+
+进入obs工作目录：
+`cd ～/obs`
+
+
+将远程obs库同步到本地：
+`osc checkout  home:用户名`
+
+输入网页用户名与密码
+
+![登陆OBS](https://images.gitee.com/uploads/images/2020/0221/212536_da404367_5682433.png "2020-02-21 11-00-38 的屏幕截图.png")
+
+第一次登陆时会询问本地密码保存方式，三种方式分别是：
+
+
+1. 明文保存
+2. 加密保存
+3. 不保存（需要每次输入） 
+
+
+![三种密码保存方式](https://images.gitee.com/uploads/images/2020/0221/212259_3542b451_5682433.png "2020-02-21 11-00-53 的屏幕截图.png")
+
+推荐选择2
+
+同步结束后可以看到当前目录下有以Project名命名的文件夹。
+
+### 配置Project：
+
+两种方法：网页操作、命令行操作
+
+- 网页操作： 
+    
+    在obs主页点击右上角
+    
+    ![主页右上角](https://images.gitee.com/uploads/images/2020/0221/212734_dd018e80_5682433.png "2020-02-21 15-46-03 的屏幕截图.png")
+
+    依次进入 Home Project -> Repositories -> Add from a Distribution 。
+
+    ![Add from a Distribution页](https://images.gitee.com/uploads/images/2020/0221/213614_78cabe6b_5682433.png "2020-02-21 21-35-54 的屏幕截图.png")
+
+    在此界面选择编包时使用的环境发行版。
+
+    在选择后后退至Repositories界面，可以看到如下图所示的环境：
+
+    ![环境标签](https://images.gitee.com/uploads/images/2020/0221/213757_668efef6_5682433.png "2020-02-21 15-54-45 的屏幕截图.png")
+
+
+    - 第一个为编辑按钮， 可以选择当前发行版编译架构
+    - 第二个为添加按钮， 可在发行版标准环境上额外添加单独的包（例如其他私人编译的依赖包）
+    - 第三个为下载， 点击后转到当前环境的仓库
+    - 第四个为删除
+
+- 命令行操作：
+
+    执行命令：
+    `osc meta prj -e [project名]` 
+    会看到如下文本。
+
+    ![meta配置](https://images.gitee.com/uploads/images/2020/0221/214042_1335a546_5682433.png "2020-02-21 16-03-30 的屏幕截图.png")
+
+    其中，
+
+
+    - repository标签为发行版标签， 可添加此项添加编依法兴办环境
+    - Path标签为可用包路径标签， 需手动添加发行版包路径。如需要额外依赖， 也可以单独添加。
+    - Arch标签为编译架构， 可同时添加多个。
+
+    例：
+
+    ```
+      <repository name="Fedora_30_standard">
+        <path project="Fedora:30" repository="standard"/>
+        <path project="Fedora:29" repository="standard"/>    //此为额外添加依赖
+        <arch>i586</arch>
+        <arch>x86_64</arch>    //此为多架构选项
+      </repository>
+    ```
+
+### 新建包：
+
+进入Project目录：
+ `cd [project名]`
+
+新建Package：
+`osc mkpac [package名]`
+
+进入Package目录并将下载源码以【tar包、所有patch、spec文件、其他source文件】格式放置：
+
+![目录格式](https://images.gitee.com/uploads/images/2020/0221/214554_80154fa6_5682433.png "2020-02-21 15-11-32 的屏幕截图.png")
+
+向新创建的package中添加以上文件：
+`osc add * `
+
+![osc add](https://images.gitee.com/uploads/images/2020/0221/214718_62b04827_5682433.png "图片1.png")
+
+将更改上传至服务器：
+`osc commit`
+
+![commit介绍](https://images.gitee.com/uploads/images/2020/0221/214827_e6de68ab_5682433.png "2020-02-21 15-25-19 的屏幕截图.png")
+
+在这里可以注明本次上传的简短介绍，用“:wq”保存并退出
+
+之后就可以在网页上等待编译并查看结果了。
+
+### 查看包状态与下载包
+
+你可以在Project与Package主页右侧看到当前编译状态
+
+![编译状态](https://images.gitee.com/uploads/images/2020/0221/215240_9ec1a02c_5682433.png "2020-02-21 21-50-40 的屏幕截图.png")
+
+
+- `finished `   表示在某个系统平台执行编译链接、安装检查的过程结束
+- `succeeded `  状态为编译成功， 
+- `failed `     为编译失败，你可以点击以查看日志
+
+你可以点击 编译平台 -> “Go to download repository” 到达编译仓库，
+
+在仓库你可以获得此Project的repo源与所有编译成功的package。
+
+### 更新包
+
+进入project文件夹： 
+`cd [project名]`
+
+更新本地代码为最新代码： 
+`osc up `
+
+进入package目录，使用 `osc add` 命令将新文件添加到package，修改spec文件后使用`osc commit`命令上传新版本。
+
+
