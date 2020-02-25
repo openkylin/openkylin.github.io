@@ -27,24 +27,24 @@ Podman提供的功能与Docker相似，大部分命令与Docker兼容，可以�
 
 1. Docker需要在系统上运行一个守护进程docker daemon，而Podman没有守护进程。Docker需要使用root用户创建容器，而Podman可以在没有root权限的情况下运行
 
-> Docker在Linux上作为守护进程运行，会产生一定的开销，并且还需要任何想创建容器的用户具有root访问权限，一旦授权，就可能存在安全风险。Podman的无守护进程架构就相对的更加灵活和安全。
+    > Docker在Linux上作为守护进程运行，会产生一定的开销，并且还需要任何想创建容器的用户具有root访问权限，一旦授权，就可能存在安全风险。Podman的无守护进程架构就相对的更加灵活和安全。
 
 2. 容器的启动方式不同：
 
-> Docker CLI命令通过gRPC API跟Docker Engine交互，通知engine需要创建一个container，然后Docker Engine会调用OCI container runtime(runc)来启动一个container。这就代表container的进程不是Docker CLI的子进程，而是Docker Engine的子进程。
-> Podman没有Daemon，它是直接跟OCI containner runtime(runc)进行交互来创建container的，所以container 的进程直接就是podman的子进程。
+    > Docker CLI命令通过gRPC API跟Docker Engine交互，通知engine需要创建一个container，然后Docker Engine会调用OCI container runtime(runc)来启动一个container。这就代表container的进程不是Docker CLI的子进程，而是Docker Engine的子进程。
+    > Podman没有Daemon，它是直接跟OCI containner runtime(runc)进行交互来创建container的，所以container 的进程直接就是podman的子进程。
 
-相比较来说Podman这种交互模式就展现出了一些优势：
+   相比较来说Podman这种交互模式就展现出了一些优势：
 
-- 系统管理员可以知道某个容器进程到底是谁启动的；
-- 如果利用cgroup对podman做一些限制，那么所有创建的容器都会被限制；
-- 如果将podman命令放入systemd单元文件中，容器进程可以通过podman返回通知，表明服务已准备好接收任务；
-- 可以将连接的socket从systemd传递到podman，并传递到容器进程以便使用它们
+    - 系统管理员可以知道某个容器进程到底是谁启动的；
+    - 如果利用cgroup对podman做一些限制，那么所有创建的容器都会被限制；
+    - 如果将podman命令放入systemd单元文件中，容器进程可以通过podman返回通知，表明服务已准备好接收任务；
+    - 可以将连接的socket从systemd传递到podman，并传递到容器进程以便使用它们
 
 3. 容器自动重启的实现不同
 
-> Docker因为有docker daemon，因此docker启动的容器支持--restart策略
-> Podman没有守护进程，也就不能通过守护进程去实现自动重启容器的功能。若在k8s中，可以通过设置pod重启策略来实现；若在操作系统中，系统通常是以Systemd作为守护进程管理工具，因此可以使用Systemd来实现开机重启容器。
+    > Docker因为有docker daemon，因此docker启动的容器支持--restart策略
+    > Podman没有守护进程，也就不能通过守护进程去实现自动重启容器的功能。若在k8s中，可以通过设置pod重启策略来实现；若在操作系统中，系统通常是以Systemd作为守护进程管理工具，因此可以使用Systemd来实现开机重启容器。
 
 ## 安装与配置
 
