@@ -93,7 +93,7 @@ OBS是Open Build Service 的简写（官方网址：[https://openbuildservice.or
 
     ![Add from a Distribution页](/assets/img/how-to-OBS/AFD页.png "AFD页.png")
 
-    在此界面选择编包时使用的环境发行版。
+    在此界面选择编包时使用的基础发行版环境。
 
     在选择后后退至Repositories界面，可以看到如下图所示的环境：
 
@@ -116,7 +116,7 @@ OBS是Open Build Service 的简写（官方网址：[https://openbuildservice.or
     其中，
 
 
-    - repository标签为发行版标签， 可添加此项添加编依法兴办环境
+    - repository标签为仓库标签， 可添加此项添加编译时的基础环境
     - Path标签为可用包路径标签， 需手动添加发行版包路径。如需要额外依赖， 也可以单独添加。
     - Arch标签为编译架构， 可同时添加多个。
 
