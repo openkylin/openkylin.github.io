@@ -2,7 +2,7 @@
 layout: post
 title: OBS与git的联动应用
 author: changjie.fu <changjie.fu@cs2c.com.cn>
-tags: [OBS][Git]
+tags: [OBS]
 ---
 
 ## 总览
